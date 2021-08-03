@@ -1,0 +1,57 @@
+server:
+  port: 8881
+  servlet:
+    # 全局path
+    context-path: /flower
+
+
+spring:
+
+# 热部署
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: src/main/java
+
+
+# mysql
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: ZXCzxc1999..
+    url: jdbc:mysql://139.196.94.101/flower_managerment?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2B8
+
+
+# redis
+  redis:
+    # Redis默认情况下有16个分片，这里配置具体使用的分片。默认是索引为0的分片
+    database: 1
+    # Redis服务器地址 本地： 127.0.0.1
+    host:  139.196.94.101
+    # Redis服务器连接端口
+    port: 6379
+    # Redis服务器连接密码（本地默认为空）
+    password: 123456
+    # 连接超时时间（毫秒）
+    timeout: 2000s
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+        max-wait: 1000ms
+      shutdown-timeout: 100ms
+# ES
+  elasticsearch:
+    cluster-name: my-application
+    cluster-nodes: 127.0.0.1:9300 # 程序连接es的端口号是9300
+
+# mybatis
+mybatis:
+  mapper-locations: Mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+##配置日志
+#logging:
+#  config: classpath:log4j.xml

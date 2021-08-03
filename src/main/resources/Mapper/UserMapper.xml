@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qcw.flowermanagerment.Mapper.UserMapper">
+
+  <resultMap id="BaseResultMap" type="com.qcw.flowermanagerment.Model.User">
+    <id column="UserId" jdbcType="VARCHAR" property="userid" />
+    <result column="Password" jdbcType="VARCHAR" property="password" />
+    <result column="Master" jdbcType="VARCHAR" property="master" />
+  </resultMap>
+
+  <delete id="deleteById" parameterType="java.lang.String">
+    delete from operator_info
+    where UserId = #{userid,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="com.qcw.flowermanagerment.Model.User">
+<!--    <selectKey keyProperty="userid" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+
+-->
+    insert into operator_info (UserId,Password, Master)
+    values (#{userid,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR}, #{master,jdbcType=VARCHAR})
+  </insert>
+
+  <update id="updateUser" parameterType="com.qcw.flowermanagerment.Model.User">
+    update operator_info
+    set Password = #{password,jdbcType=VARCHAR},
+      Master = #{master,jdbcType=VARCHAR}
+    where UserId = #{userid,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select UserId, Password, Master
+    from operator_info
+    where UserId = #{userid,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select UserId, Password, Master
+    from operator_info
+  </select>
+
+  <!--
+
+    int checkUser(String username);
+
+    int checkUser(String username, String password);
+    resultType  而不是map
+  -->
+  <select id="checkUser" resultType="java.lang.Integer">
+    select count(*)
+    from operator_info
+    where UserId = #{param1}
+  </select>
+
+  <select id="checkUserPassword" resultType="java.lang.Integer">
+    select count(*)
+    from operator_info
+    where UserId = #{param1} and Password = #{param2}
+  </select>
+
+  <select id="getMasterinfo" parameterType="java.lang.String" resultType="java.lang.String">
+    select Master from operator_info where  UserId = #{param1}
+  </select>
+
+  <update id="updateMasterinfo" >
+    update operator_info
+    set Master = #{param2}
+    where UserId = #{param1}
+  </update>
+</mapper>

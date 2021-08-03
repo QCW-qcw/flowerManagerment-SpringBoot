@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qcw.flowermanagerment.Mapper.FlowerMapper">
+  <resultMap id="BaseResultMap" type="com.qcw.flowermanagerment.Model.Flower">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="plantTime" jdbcType="VARCHAR" property="planttime" />
+    <result column="farming" jdbcType="VARCHAR" property="farming" />
+    <result column="nongzi" jdbcType="VARCHAR" property="nongzi" />
+    <result column="location1" jdbcType="VARCHAR" property="location1" />
+    <result column="location2" jdbcType="VARCHAR" property="location2" />
+    <result column="location3" jdbcType="VARCHAR" property="location3" />
+    <result column="location4" jdbcType="VARCHAR" property="location4" />
+    <result column="company" jdbcType="VARCHAR" property="company" />
+    <result column="contactPerson" jdbcType="VARCHAR" property="contactperson" />
+    <result column="contactNum" jdbcType="VARCHAR" property="contactnum" />
+    <result column="quantity" jdbcType="VARCHAR" property="quantity" />
+    <result column="costperPlant" jdbcType="DOUBLE" property="costperplant" />
+    <result column="cost" jdbcType="DOUBLE" property="cost" />
+    <result column="operator" jdbcType="VARCHAR" property="operator" />
+    <result column="fertilization" jdbcType="VARCHAR" property="fertilization" />
+    <result column="watering" jdbcType="VARCHAR" property="watering" />
+    <result column="growth" jdbcType="VARCHAR" property="growth" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="allcolumns">
+    id, type, plantTime, farming, nongzi, location1, location2, location3, location4,
+    company, contactPerson, contactNum, quantity, costperPlant, cost, operator, fertilization,
+    watering, growth, remark
+  </sql>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from flower_info
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="com.qcw.flowermanagerment.Model.Flower">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into flower_info (type, plantTime, farming, 
+      nongzi, location1, location2, 
+      location3, location4, company, 
+      contactPerson, contactNum, quantity, 
+      costperPlant, cost, operator, 
+      fertilization, watering, growth, 
+      remark)
+    values (#{type,jdbcType=VARCHAR}, #{planttime,jdbcType=VARCHAR}, #{farming,jdbcType=VARCHAR}, 
+      #{nongzi,jdbcType=VARCHAR}, #{location1,jdbcType=VARCHAR}, #{location2,jdbcType=VARCHAR}, 
+      #{location3,jdbcType=VARCHAR}, #{location4,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, 
+      #{contactperson,jdbcType=VARCHAR}, #{contactnum,jdbcType=VARCHAR}, #{quantity,jdbcType=VARCHAR}, 
+      #{costperplant,jdbcType=DOUBLE}, #{cost,jdbcType=DOUBLE}, #{operator,jdbcType=VARCHAR}, 
+      #{fertilization,jdbcType=VARCHAR}, #{watering,jdbcType=VARCHAR}, #{growth,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+
+  <update id="updateByPrimaryKey" parameterType="com.qcw.flowermanagerment.Model.Flower">
+    update flower_info
+    set type = #{type,jdbcType=VARCHAR},
+      plantTime = #{planttime,jdbcType=VARCHAR},
+      farming = #{farming,jdbcType=VARCHAR},
+      nongzi = #{nongzi,jdbcType=VARCHAR},
+      location1 = #{location1,jdbcType=VARCHAR},
+      location2 = #{location2,jdbcType=VARCHAR},
+      location3 = #{location3,jdbcType=VARCHAR},
+      location4 = #{location4,jdbcType=VARCHAR},
+      company = #{company,jdbcType=VARCHAR},
+      contactPerson = #{contactperson,jdbcType=VARCHAR},
+      contactNum = #{contactnum,jdbcType=VARCHAR},
+      quantity = #{quantity,jdbcType=VARCHAR},
+      costperPlant = #{costperplant,jdbcType=DOUBLE},
+      cost = #{cost,jdbcType=DOUBLE},
+      operator = #{operator,jdbcType=VARCHAR},
+      fertilization = #{fertilization,jdbcType=VARCHAR},
+      watering = #{watering,jdbcType=VARCHAR},
+      growth = #{growth,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="allcolumns"/>
+    from flower_info
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="allcolumns"/>
+    from flower_info
+  </select>
+
+</mapper>
